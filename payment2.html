@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDOAA 2025 Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9CD4BF;
+            --primary-dark: #7fb5a0;
+            --secondary-color: #FCC860;
+            --secondary-dark: #e5b555;
+            --text-dark: #2c3e50;
+            --text-medium: #34495e;
+            --text-light: #7f8c8d;
+            --background: #f8fafc;
+            --white: #ffffff;
+            --error: #e74c3c;
+            --success: #27ae60;
+            --border-radius: 10px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--background);
+            color: var(--text-medium);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            width: 100%;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2.5rem;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem 0 3rem;
+        }
+
+        .button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            min-width: 200px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .button.primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .button.secondary {
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .button.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .button.secondary:hover {
+            background: var(--secondary-dark);
+        }
+
+        .instructions {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--background);
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .instructions h2 {
+            font-size: 1.75rem;
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .instructions ul {
+            list-style: none;
+        }
+
+        .instructions li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .instructions li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .instructions li ul {
+            margin-top: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .qr-code {
+            text-align: center;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .qr-code h3 {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .qr-code img {
+            max-width: 200px;
+            border-radius: var(--border-radius);
+        }
+
+        .form-section {
+            background: var(--background);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-weight: normal;
+            margin: 0;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .input-group input[type="text"] {
+            flex: 1;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-medium);
+            transition: var(--transition);
+        }
+
+        .input-group input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(156, 212, 191, 0.2);
+        }
+
+        .input-group button {
+            padding: 0.875rem 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .input-group button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        .validation-message {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            min-height: 20px;
+        }
+
+        .error-message {
+            color: var(--error);
+        }
+
+        .success-message {
+            color: var(--success);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="container">
+            <h1>BDOAA 2025 Registration</h1>
+            
+            <div class="button-container">
+                <button class="button primary" onclick="showRegistration()">Register for BDOAA 2025</button>
+                <button class="button secondary" onclick="showCheckRegistration()">Check Your Registration</button>
+            </div>
+
+            <!-- Registration Instructions -->
+            <div id="registrationInstructions" class="instructions">
+                <div class="payment-instructions">
+                    <h2>Before you proceed</h2>
+                    <ul>
+                        <li>Go to 'Make Payment' Option from bKash App or USSD: *247#</li>
+                        <li>Enter Merchant Number: 01601621641 or scan the QR code</li>
+                        <li>Pay the applicable amount for you
+                            <ul>
+                                <li>Offline Regional: BDT 300/-</li>
+                                <li>Online E-Regional: BDT 350/-</li>
+                                <li>Both Offline and Online: BDT 650/-</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="qr-code">
+                    <h3>bKash Payment QR Code</h3>
+                    <img src="qr-code.png" alt="bKash Payment QR Code">
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div id="registrationForm" class="form-section">
+                <div class="form-group">
+                    <label>Which Olympiad do you want to participate?</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="olympiadType" value="Offline"> Offline Regional
+                        </label>
+                        <label>
+                            <input type="radio" name="olympiadType" value="Online"> Online E-Regional
+                        </label>
+                        <label>
+                            <input type="radio" name="olympiadType" value="Both"> Both Offline and Online
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Enter Your Transaction ID</label>
+                    <div class="input-group">
+                        <input type="text" id="transactionId" placeholder="Enter transaction ID">
+                        <button id="validateBtn" onclick="validateTransaction()">Validate</button>
+                    </div>
+                    <div id="validationMessage" class="validation-message"></div>
+                </div>
+            </div>
+
+            <!-- Check Registration Form -->
+            <div id="checkRegistrationForm" class="form-section">
+                <div class="form-group">
+                    <label>Enter Your Transaction ID</label>
+                    <div class="input-group">
+                        <input type="text" id="checkTransactionId" placeholder="Enter transaction ID">
+                        <button onclick="checkRegistration()">Check</button>
+                    </div>
+                    <div id="checkMessage" class="validation-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showRegistration() {
+            document.getElementById('registrationInstructions').style.display = 'grid';
+            document.getElementById('registrationForm').style.display = 'block';
+            document.getElementById('checkRegistrationForm').style.display = 'none';
+        }
+
+        function showCheckRegistration() {
+            document.getElementById('registrationInstructions').style.display = 'none';
+            document.getElementById('registrationForm').style.display = 'none';
+            document.getElementById('checkRegistrationForm').style.display = 'block';
+        }
+
+        function validateTransaction() {
+            const transactionId = document.getElementById('transactionId').value.trim();
+            const olympiadType = document.querySelector('input[name="olympiadType"]:checked')?.value;
+            const messageDiv = document.getElementById('validationMessage');
+
+            if (!transactionId) {
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Please input transaction ID, then click Validate';
+                return;
+            }
+
+            if (!olympiadType) {
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Please select an olympiad type';
+                return;
+            }
+
+            // Show loading message
+            messageDiv.className = 'validation-message';
+            messageDiv.innerHTML = '<span class="loading"></span> Please wait...';
+
+            // Make API call to validate transaction
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://script.google.com/macros/s/AKfycbx13DL83Tw6b88jDffOhxRsdZs38-JR4MGOuDV7BCvguJrir0hun0F1O6pZ_3frYhzK/exec', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            messageDiv.className = 'validation-message success-message';
+                            messageDiv.textContent = 'Transaction validated successfully';
+                            
+                            // Disable form elements
+                            document.getElementById('transactionId').readOnly = true;
+                            document.querySelectorAll('input[name="olympiadType"]').forEach(radio => {
+                                if (!radio.checked) {
+                                    radio.disabled = true;
+                                }
+                            });
+                            
+                            // Add logic to show/hide regional round based on olympiad type
+                            const showRegionalRound = olympiadType !== 'Online';
+                            
+                            // Populate the registration fields
+                            const registrationFieldsContainer = document.createElement('div');
+                            registrationFieldsContainer.className = 'form-section registration-fields';
+                            registrationFieldsContainer.innerHTML = `
+                                ${showRegionalRound ? `
+                                <div class='form-group full-width'>
+                                    <label for='regionalRound'>Which Regional Round do you want to register for?</label>
+                                    <select id='regionalRound' required>
+                                        <option value='' disabled selected hidden>Select Regional Round</option>
+                                        <option value='Dhaka'>Dhaka</option>
+                                        <option value='Rajshahi'>Rajshahi</option>
+                                        <option value='Chattogram'>Chattogram</option>
+                                        <option value='Khulna'>Khulna</option>
+                                        <option value='Barishal'>Barishal</option>
+                                        <option value='Sylhet'>Sylhet</option>
+                                        <option value='Bogura'>Bogura</option>
+                                    </select>
+                                </div>
+                                ` : ''}
+                                <div class='form-group full-width'>
+                                    <label for='fullName'>Full Name</label>
+                                    <input type='text' id='fullName' placeholder='Enter your full name' required>
+                                </div>
+                                <div class='form-group full-width'>
+                                    <label for='institution'>Institution</label>
+                                    <input type='text' id='institution' placeholder='Enter your institution name' required>
+                                </div>
+                                <div class='form-group full-width'>
+                                    <label for='class'>Class (in January 2025)</label>
+                                    <select id='class' required>
+                                        <option value='' disabled selected hidden>Select your class</option>
+                                        <option value='VI'>VI</option>
+                                        <option value='VII'>VII</option>
+                                        <option value='VIII'>VIII</option>
+                                        <option value='IX or equivalent'>IX or equivalent</option>
+                                        <option value='X or equivalent'>X or equivalent</option>
+                                        <option value='SSC 25 or equivalent'>SSC 25 or equivalent</option>
+                                        <option value='XI/A1 or equivalent'>XI/A1 or equivalent</option>
+                                        <option value='HSC 25/A2 or equivalent'>HSC 25/A2 or equivalent</option>
+                                        <option value='HSC 24 or equivalent'>HSC 24 or equivalent</option>
+                                    </select>
+                                </div>
+                                <div class='form-group'>
+                                    <div style='flex: 2'>
+                                        <label for='email'>Email</label>
+                                        <input type='email' id='email' placeholder='Enter your email address' required>
+                                    </div>
+                                    <div style='flex: 1'>
+                                        <label for='phone'>Phone</label>
+                                        <input type='tel' id='phone' placeholder='Enter phone number' required>
+                                    </div>
+                                </div>
+                                <div class='form-group'>
+                                    <div style='flex: 1'>
+                                        <label for='gender'>Gender</label>
+                                        <select id='gender' required>
+                                            <option value='' disabled selected hidden>Select gender</option>
+                                            <option value='Male'>Male</option>
+                                            <option value='Female'>Female</option>
+                                        </select>
+                                    </div>
+                                    <div style='flex: 1'>
+                                        <label for='dob'>Date of Birth</label>
+                                        <input type='date' id='dob' required>
+                                    </div>
+                                </div>
+                                <div class='form-group'>
+                                    <div style='flex: 1'>
+                                        <label for='district'>District</label>
+                                        <select id='district' required>
+                                            <option value='' disabled selected hidden>Select district</option>
+                                            <option value='Bagerhat'>Bagerhat</option>
+                                            <option value='Bandarban'>Bandarban</option>
+                                            <option value='Barguna'>Barguna</option>
+                                            <option value='Barisal'>Barisal</option>
+                                            <option value='Bhola'>Bhola</option>
+                                            <option value='Bogra'>Bogra</option>
+                                            <option value='Brahmanbaria'>Brahmanbaria</option>
+                                            <option value='Chandpur'>Chandpur</option>
+                                            <option value='Chapainawabganj'>Chapainawabganj</option>
+                                            <option value='Chattogram'>Chattogram</option>
+                                            <option value='Chuadanga'>Chuadanga</option>
+                                            <option value='Comilla'>Comilla</option>
+                                            <option value='Cox's Bazar'>Cox's Bazar</option>
+                                            <option value='Dhaka'>Dhaka</option>
+                                            <option value='Dinajpur'>Dinajpur</option>
+                                            <option value='Faridpur'>Faridpur</option>
+                                            <option value='Feni'>Feni</option>
+                                            <option value='Gaibandha'>Gaibandha</option>
+                                            <option value='Gazipur'>Gazipur</option>
+                                            <option value='Gopalganj'>Gopalganj</option>
+                                            <option value='Habiganj'>Habiganj</option>
+                                            <option value='Jamalpur'>Jamalpur</option>
+                                            <option value='Jashore'>Jashore</option>
+                                            <option value='Jhalokati'>Jhalokati</option>
+                                            <option value='Jhenaidah'>Jhenaidah</option>
+                                            <option value='Joypurhat'>Joypurhat</option>
+                                            <option value='Khagrachhari'>Khagrachhari</option>
+                                            <option value='Khulna'>Khulna</option>
+                                            <option value='Kishoreganj'>Kishoreganj</option>
+                                            <option value='Kurigram'>Kurigram</option>
+                                            <option value='Kushtia'>Kushtia</option>
+                                            <option value='Lakshmipur'>Lakshmipur</option>
+                                            <option value='Lalmonirhat'>Lalmonirhat</option>
+                                            <option value='Madaripur'>Madaripur</option>
+                                            <option value='Magura'>Magura</option>
+                                            <option value='Manikganj'>Manikganj</option>
+                                            <option value='Meherpur'>Meherpur</option>
+                                            <option value='Moulvibazar'>Moulvibazar</option>
+                                            <option value='Munshiganj'>Munshiganj</option>
+                                            <option value='Mymensingh'>Mymensingh</option>
+                                            <option value='Naogaon'>Naogaon</option>
+                                            <option value='Narail'>Narail</option>
+                                            <option value='Narayanganj'>Narayanganj</option>
+                                            <option value='Narsingdi'>Narsingdi</option>
+                                            <option value='Natore'>Natore</option>
+                                            <option value='Netrokona'>Netrokona</option>
+                                            <option value='Nilphamari'>Nilphamari</option>
+                                            <option value='Noakhali'>Noakhali</option>
+                                            <option value='Pabna'>Pabna</option>
+                                            <option value='Panchagarh'>Panchagarh</option>
+                                            <option value='Patuakhali'>Patuakhali</option>
+                                            <option value='Pirojpur'>Pirojpur</option>
+                                            <option value='Rajbari'>Rajbari</option>
+                                            <option value='Rajshahi'>Rajshahi</option>
+                                            <option value='Rangamati'>Rangamati</option>
+                                            <option value='Rangpur'>Rangpur</option>
+                                            <option value='Satkhira'>Satkhira</option>
+                                            <option value='Shariatpur'>Shariatpur</option>
+                                            <option value='Sherpur'>Sherpur</option>
+                                            <option value='Sirajganj'>Sirajganj</option>
+                                            <option value='Sunamganj'>Sunamganj</option>
+                                            <option value='Sylhet'>Sylhet</option>
+                                            <option value='Tangail'>Tangail</option>
+                                            <option value='Thakurgaon'>Thakurgaon</option>
+                                        </select>
+                                    </div>
+                                    <div style='flex: 1'>
+                                        <label for='tshirtSize'>T-Shirt Size</label>
+                                        <select id='tshirtSize' required>
+                                            <option value='' disabled selected hidden>Select size</option>
+                                            <option value='S'>S</option>
+                                            <option value='M'>M</option>
+                                            <option value='L'>L</option>
+                                            <option value='XL'>XL</option>
+                                            <option value='XXL'>XXL</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='form-group full-width'>
+                                    <label for='foodHabit'>Food Habit</label>
+                                    <input type='text' id='foodHabit' placeholder='Enter your food preferences'>
+                                </div>
+                                <div class='button-group' style='text-align: center;'>
+                                    <button class='button primary' id='submitBtn' onclick="submitRegistration()">Submit</button>
+                                    <button class='button secondary' onclick='window.location.reload();'>Start Over</button>
+                                </div>
+                            `;
+                            
+                            // Add styles for the registration fields
+                            const style = document.createElement('style');
+                            style.textContent = `
+                                .registration-fields .form-group {
+                                    display: flex;
+                                    gap: 1rem;
+                                    margin-bottom: 1rem;
+                                }
+                                .registration-fields .form-group.full-width {
+                                    display: block;
+                                }
+                                .registration-fields label {
+                                    display: block;
+                                    margin-bottom: 0.5rem;
+                                    font-weight: 500;
+                                }
+                                .registration-fields input,
+                                .registration-fields select {
+                                    width: 100%;
+                                    padding: 0.5rem;
+                                    border: 1px solid #ccc;
+                                    border-radius: 4px;
+                                    font-size: 1rem;
+                                }
+                                .registration-fields input[type="date"] {
+                                    padding: 0.4rem;
+                                }
+                                .registration-fields input.touched:invalid,
+                                .registration-fields select.touched:invalid {
+                                    border-color: #ff4444;
+                                }
+                                .error-message {
+                                    color: #ff4444;
+                                    font-size: 0.8rem;
+                                    margin-top: 0.2rem;
+                                }
+                                button:disabled {
+                                    opacity: 0.6;
+                                    cursor: not-allowed;
+                                }
+                            `;
+                            document.head.appendChild(style);
+                            
+                            document.getElementById('registrationForm').appendChild(registrationFieldsContainer);
+                            
+                            // Add validation logic
+                            const form = document.getElementById('registrationForm');
+                            const submitBtn = document.getElementById('submitBtn');
+                            const emailInput = document.getElementById('email');
+                            const phoneInput = document.getElementById('phone');
+                            
+                            // Email validation
+                            emailInput.addEventListener('input', function() {
+                                if (this.classList.contains('touched')) {
+                                    validateEmail(this);
+                                }
+                            });
+                            
+                            emailInput.addEventListener('blur', function() {
+                                this.classList.add('touched');
+                                validateEmail(this);
+                            });
+
+                            function validateEmail(input) {
+                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                const isValid = emailRegex.test(input.value);
+                                input.setCustomValidity(isValid ? '' : 'Please enter a valid email address');
+                                const errorDiv = input.parentElement.querySelector('.error-message') || document.createElement('div');
+                                errorDiv.className = 'error-message';
+                                if (!isValid && input.value) {
+                                    errorDiv.textContent = 'Please enter a valid email address';
+                                    if (!input.parentElement.querySelector('.error-message')) {
+                                        input.parentElement.appendChild(errorDiv);
+                                    }
+                                } else {
+                                    errorDiv.remove();
+                                }
+                                validateForm();
+                            }
+
+                            // Phone validation
+                            phoneInput.addEventListener('input', function() {
+                                if (this.classList.contains('touched')) {
+                                    validatePhone(this);
+                                }
+                            });
+                            
+                            phoneInput.addEventListener('blur', function() {
+                                this.classList.add('touched');
+                                validatePhone(this);
+                            });
+
+                            function validatePhone(input) {
+                                const phoneRegex = /^01\d{9}$/;
+                                const isValid = phoneRegex.test(input.value);
+                                input.setCustomValidity(isValid ? '' : 'Must be a valid Bangladeshi phone number');
+                                const errorDiv = input.parentElement.querySelector('.error-message') || document.createElement('div');
+                                errorDiv.className = 'error-message';
+                                if (!isValid && input.value) {
+                                    errorDiv.textContent = 'Must be a valid Bangladeshi phone number';
+                                    if (!input.parentElement.querySelector('.error-message')) {
+                                        input.parentElement.appendChild(errorDiv);
+                                    }
+                                } else {
+                                    errorDiv.remove();
+                                }
+                                validateForm();
+                            }
+
+                            // Form validation
+                            function validateForm() {
+                                const requiredFields = form.querySelectorAll('input[required], select[required]');
+                                let isValid = true;
+
+                                requiredFields.forEach(field => {
+                                    if (!field.value || field.validity.customError) {
+                                        isValid = false;
+                                    }
+                                });
+
+                                submitBtn.disabled = !isValid;
+                            }
+
+                            // Add validation check on all required fields
+                            form.querySelectorAll('input[required], select[required]').forEach(field => {
+                                field.addEventListener('input', function() {
+                                    if (this.classList.contains('touched')) {
+                                        validateForm();
+                                    }
+                                });
+                                field.addEventListener('blur', function() {
+                                    this.classList.add('touched');
+                                    validateForm();
+                                });
+                            });
+
+                            // Initial validation check
+                            validateForm();
+                            
+                            // Show the registration fields
+                            registrationFieldsContainer.style.display = 'block';
+                            
+                            // Disable the validate button
+                            document.getElementById('validateBtn').style.display = 'none';
+                        } else {
+                            messageDiv.className = 'validation-message error-message';
+                            messageDiv.textContent = response.error;
+                        }
+                    } catch (error) {
+                        messageDiv.className = 'validation-message error-message';
+                        messageDiv.textContent = 'Error processing response';
+                    }
+                }
+            };
+
+            xhr.onerror = function() {
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Failed to connect to server';
+            };
+
+            const data = `transactionId=${encodeURIComponent(transactionId)}&olympiadType=${encodeURIComponent(olympiadType)}`;
+            xhr.send(data);
+        }
+        
+        function submitRegistration() {
+            const email = document.getElementById('email').value.trim();
+            const examType = document.querySelector('input[name="olympiadType"]:checked')?.value;
+            const messageDiv = document.getElementById('validationMessage');
+
+            if (!email) {
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Please enter your email.';
+                return;
+            }
+
+            if (!examType) {
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Please select an exam type.';
+                return;
+            }
+
+            // Show loading message
+            messageDiv.className = 'validation-message';
+            messageDiv.innerHTML = '<span class="loading"></span> Please wait...';
+
+            // Debug: Log the email and exam type for validation
+            console.log('Email:', email);
+            console.log('Exam Type:', examType);
+
+            // API call for email validation
+            const xhr = new XMLHttpRequest();
+            xhr.open(
+                'POST',
+                'https://script.google.com/macros/s/AKfycbxNCEDN37Fcy46iBAoi7oKM8ClLKV6iSO2urGbIQnnE-Ub0VAyaN8ICOPCAuIgJ84aq/exec',
+                true
+            ); // Replace with your script URL
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    console.log('Response:', xhr.responseText); // Debug: Log the server response
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            messageDiv.className = 'validation-message success-message';
+                            messageDiv.textContent = response.message;
+                        } else {
+                            messageDiv.className = 'validation-message error-message';
+                            messageDiv.textContent = response.error;
+                        }
+                    } catch (error) {
+                        console.error('Error parsing response:', error); // Debug: Log any parsing error
+                        messageDiv.className = 'validation-message error-message';
+                        messageDiv.textContent = 'Error processing response.';
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                console.error('Network Error:', xhr); // Debug: Log network error
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Failed to connect to server.';
+            };
+
+            // Pass action as 'validateEmail'
+            const data = `action=validateEmail&email=${encodeURIComponent(email)}&examType=${encodeURIComponent(examType)}`;
+            console.log('Data Payload:', data); // Debug: Log the data being sent
+            xhr.send(data);
+        }
+
+        function checkRegistration() {
+            const transactionId = document.getElementById('checkTransactionId').value.trim();
+            const messageDiv = document.getElementById('checkMessage');
+
+            if (!transactionId) {
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Please enter transaction ID';
+                return;
+            }
+
+            messageDiv.className = 'validation-message';
+            messageDiv.innerHTML = '<span class="loading"></span> Checking registration...';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `https://script.google.com/macros/s/AKfycbyLcCWDNWri4C2FwAMwo7vFa9RV9CKCWscHdXVjg80gEmRKbvi1sDNm739MnGNxg7ak/exec?action=check&transactionId=${encodeURIComponent(transactionId)}`, true);
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        messageDiv.className = 'validation-message';
+                        if (response.success) {
+                            messageDiv.className += ' success-message';
+                        } else {
+                            messageDiv.className += ' error-message';
+                        }
+                        messageDiv.textContent = response.message;
+                    } catch (error) {
+                        messageDiv.className = 'validation-message error-message';
+                        messageDiv.textContent = 'Error processing response';
+                    }
+                }
+            };
+
+            xhr.onerror = function() {
+                messageDiv.className = 'validation-message error-message';
+                messageDiv.textContent = 'Failed to connect to server';
+            };
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
