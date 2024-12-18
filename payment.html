@@ -742,113 +742,83 @@
             const data = `transactionId=${encodeURIComponent(transactionId)}&olympiadType=${encodeURIComponent(olympiadType)}`;
             xhr.send(data);
         }
-        
+
         function submitRegistration() {
-            const email = document.getElementById('email').value.trim();
-            const examType = document.querySelector('input[name="olympiadType"]:checked')?.value;
+            const form = document.getElementById('registrationForm');
             const messageDiv = document.getElementById('validationMessage');
-
-            if (!email) {
-                messageDiv.className = 'validation-message error-message';
-                messageDiv.textContent = 'Please enter your email.';
-                return;
-            }
-
-            if (!examType) {
-                messageDiv.className = 'validation-message error-message';
-                messageDiv.textContent = 'Please select an exam type.';
-                return;
-            }
+            
+            // Collect form data
+            const formData = {
+                action: 'register',
+                olympiadType: document.querySelector('input[name="olympiadType"]:checked').value,
+                transactionId: document.getElementById('transactionId').value,
+                regionalRound: document.getElementById('regionalRound')?.value || '',
+                fullName: document.getElementById('fullName').value,
+                institution: document.getElementById('institution').value,
+                class: document.getElementById('class').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                gender: document.getElementById('gender').value,
+                dob: document.getElementById('dob').value,
+                district: document.getElementById('district').value,
+                tshirtSize: document.getElementById('tshirtSize').value,
+                foodHabit: document.getElementById('foodHabit').value || ''
+            };
 
             // Show loading message
             messageDiv.className = 'validation-message';
-            messageDiv.innerHTML = '<span class="loading"></span> Please wait...';
+            messageDiv.innerHTML = '<span class="loading"></span> Submitting registration...';
 
-            // Debug: Log the email and exam type for validation
-            console.log('Email:', email);
-            console.log('Exam Type:', examType);
+            // Disable submit button
+            document.getElementById('submitBtn').disabled = true;
 
-            // API call for email validation
-            const xhr = new XMLHttpRequest();
-            xhr.open(
-                'POST',
-                'https://script.google.com/macros/s/AKfycbxNCEDN37Fcy46iBAoi7oKM8ClLKV6iSO2urGbIQnnE-Ub0VAyaN8ICOPCAuIgJ84aq/exec',
-                true
-            ); // Replace with your script URL
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    console.log('Response:', xhr.responseText); // Debug: Log the server response
-                    try {
-                        const response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            messageDiv.className = 'validation-message success-message';
-                            messageDiv.textContent = response.message;
-                        } else {
-                            messageDiv.className = 'validation-message error-message';
-                            messageDiv.textContent = response.error;
-                        }
-                    } catch (error) {
-                        console.error('Error parsing response:', error); // Debug: Log any parsing error
+            // Create a unique callback name
+            const callbackName = 'registrationCallback_' + Math.random().toString(36).substr(2, 9);
+            window[callbackName] = function(response) {
+                try {
+                    if (response.success) {
+                        messageDiv.className = 'validation-message success-message';
+                        messageDiv.innerHTML = 'Your registration is successful! Check your registration details from <a href="#" onclick="document.getElementById(\'checkRegistrationTab\').click();">here</a>';
+                        
+                        // Clear and disable the form
+                        form.reset();
+                        Array.from(form.elements).forEach(element => {
+                            element.disabled = true;
+                        });
+                    } else {
                         messageDiv.className = 'validation-message error-message';
-                        messageDiv.textContent = 'Error processing response.';
+                        messageDiv.textContent = response.error || 'Registration failed. Please try again.';
+                        document.getElementById('submitBtn').disabled = false;
                     }
+                } catch (error) {
+                    messageDiv.className = 'validation-message error-message';
+                    messageDiv.textContent = 'Error processing response. Please try again.';
+                    document.getElementById('submitBtn').disabled = false;
                 }
+                
+                // Clean up
+                document.body.removeChild(script);
+                delete window[callbackName];
             };
 
-            xhr.onerror = function () {
-                console.error('Network Error:', xhr); // Debug: Log network error
+            // Create script element for JSONP
+            const script = document.createElement('script');
+            const queryString = Object.keys(formData)
+                .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(formData[key])}`)
+                .join('&');
+            script.src = `https://script.google.com/macros/s/AKfycbx0cJF-EsjNEgZiSXmAS_yJLOfdgyGp-QEL5gxdHim_6Zeo5zlgOf-rabsMWuTYM7DW/exec?${queryString}&callback=${callbackName}`;
+            
+            // Handle script load error
+            script.onerror = function() {
                 messageDiv.className = 'validation-message error-message';
-                messageDiv.textContent = 'Failed to connect to server.';
+                messageDiv.textContent = 'Failed to connect to server. Please try again.';
+                document.getElementById('submitBtn').disabled = false;
+                document.body.removeChild(script);
+                delete window[callbackName];
             };
 
-            // Pass action as 'validateEmail'
-            const data = `action=validateEmail&email=${encodeURIComponent(email)}&examType=${encodeURIComponent(examType)}`;
-            console.log('Data Payload:', data); // Debug: Log the data being sent
-            xhr.send(data);
-        }
-
-        function checkRegistration() {
-            const transactionId = document.getElementById('checkTransactionId').value.trim();
-            const messageDiv = document.getElementById('checkMessage');
-
-            if (!transactionId) {
-                messageDiv.className = 'validation-message error-message';
-                messageDiv.textContent = 'Please enter transaction ID';
-                return;
-            }
-
-            messageDiv.className = 'validation-message';
-            messageDiv.innerHTML = '<span class="loading"></span> Checking registration...';
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', `https://script.google.com/macros/s/AKfycbyLcCWDNWri4C2FwAMwo7vFa9RV9CKCWscHdXVjg80gEmRKbvi1sDNm739MnGNxg7ak/exec?action=check&transactionId=${encodeURIComponent(transactionId)}`, true);
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    try {
-                        const response = JSON.parse(xhr.responseText);
-                        messageDiv.className = 'validation-message';
-                        if (response.success) {
-                            messageDiv.className += ' success-message';
-                        } else {
-                            messageDiv.className += ' error-message';
-                        }
-                        messageDiv.textContent = response.message;
-                    } catch (error) {
-                        messageDiv.className = 'validation-message error-message';
-                        messageDiv.textContent = 'Error processing response';
-                    }
-                }
-            };
-
-            xhr.onerror = function() {
-                messageDiv.className = 'validation-message error-message';
-                messageDiv.textContent = 'Failed to connect to server';
-            };
-
-            xhr.send();
+            // Add script to document
+            document.body.appendChild(script);
         }
     </script>
 </body>
